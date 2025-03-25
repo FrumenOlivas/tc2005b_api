@@ -13,26 +13,26 @@ export const getUser = async (req, res) => {
     values: [req.params.id],
   };
   const data = await sql.query(query);
-  res.json(data.rows);
+  res.json(data.rows[0]);
 };
 
 export const postUser = async (req, res) => {
-  const { name, username, password } = req.body;
+  const { name, username, password, points } = req.body;
   const sql = connectDB();
   const query = {
-    text: "insert into users(name, username, password) values($1, $2, $3)",
-    values: [name, username, password],
+    text: "insert into users(name, username, password, points) values($1, $2, $3, $4)",
+    values: [name, username, password, points],
   };
   const data = await sql.query(query);
   res.json(data.rows);
 };
 
 export const putUser = async (req, res) => {
-  const { name, username, password } = req.body;
+  const { name, username, password, points } = req.body;
   const sql = connectDB();
   const query = {
-    text: "update users set name = $1, username = $2, password = $3 where id = $4",
-    values: [name, username, password, req.params.id],
+    text: "update users set name = $1, username = $2, password = $3, points = $4 where id = $5",
+    values: [name, username, password, points, req.params.id],
   };
   const data = await sql.query(query);
   res.json(data.rows);
